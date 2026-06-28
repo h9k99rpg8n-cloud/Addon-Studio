@@ -1,0 +1,32 @@
+{
+  "name": "addon-studio",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "description": "A modular Minecraft Bedrock add-on creation studio.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "fflate": "latest",
+    "file-saver": "latest",
+    "idb-keyval": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "uuid": "latest",
+    "zod": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@types/file-saver": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  }
+}
