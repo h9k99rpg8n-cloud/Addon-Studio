@@ -1,4 +1,10 @@
+import { useState } from 'react'
 import { Blocks, Box, Bug, Download, FileCode2, PackagePlus, Sparkles } from 'lucide-react'
+import type { AddonProject } from '../core/project/projectTypes'
+import { NewProjectPanel } from '../modules/projects/NewProjectPanel'
+import type { StudioBlock } from '../modules/blocks/blockTypes'
+import { NewBlockPanel } from '../modules/blocks/NewBlockPanel'
+import { PixelStudio } from '../modules/pixel-studio/PixelStudio'
 
 const modules = [
   {
@@ -40,6 +46,15 @@ const modules = [
 ]
 
 export function App() {
+  const [project, setProject] = useState<AddonProject | null>(null)
+  const [block, setBlock] = useState<StudioBlock | null>(null)
+  const [showPixelStudio, setShowPixelStudio] = useState(false)
+
+  function updateTexture(texture: string, pixels: string[], size: number) {
+    setBlock((current) => current ? { ...current, texture, pixels, size } : current)
+    setShowPixelStudio(false)
+  }
+
   return (
     <main className="app-shell">
       <section className="hero">
@@ -52,10 +67,23 @@ export function App() {
           A professional modular suite for creating Minecraft Bedrock add-ons, worlds,
           resources and gameplay systems from one place.
         </p>
-        <div className="hero-actions">
-          <button type="button">Create Project</button>
-          <button type="button" className="secondary">Open Test Lab</button>
-        </div>
+      </section>
+
+      <section className="workflow-grid">
+        {!project ? (
+          <NewProjectPanel onCreateProject={setProject} />
+        ) : (
+          <NewBlockPanel
+            block={block}
+            onCreateBlock={setBlock}
+            onCreateTexture={() => setShowPixelStudio(true)}
+            project={project}
+          />
+        )}
+
+        {block && showPixelStudio ? (
+          <PixelStudio block={block} onUpdateTexture={updateTexture} />
+        ) : null}
       </section>
 
       <section className="module-grid" aria-label="Addon Studio modules">
