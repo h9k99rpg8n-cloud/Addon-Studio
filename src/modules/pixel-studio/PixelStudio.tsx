@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Brush, Eraser, RotateCcw, Sparkles, Trash2 } from 'lucide-react'
+import type { PointerEvent } from 'react'
+import { Brush, Check, Eraser, RotateCcw, Sparkles, Trash2 } from 'lucide-react'
 import { pixelTemplates } from './pixelTemplates'
 import type { PixelTemplate, PixelTool, TextureSize } from './pixelStudioTypes'
 import './pixelStudio.css'
+
+type PixelStudioProps = {
+  onUpdateTexture?: (textureName: string, pixels: string[], size: number) => void
+}
 
 const textureSizes: TextureSize[] = [16, 32, 64, 128]
 
@@ -10,7 +15,7 @@ function createBlankPixels(size: TextureSize) {
   return Array<string | null>(size * size).fill(null)
 }
 
-function getPixelIndex(event: React.PointerEvent<HTMLCanvasElement>, size: TextureSize) {
+function getPixelIndex(event: PointerEvent<HTMLCanvasElement>, size: TextureSize) {
   const canvas = event.currentTarget
   const rect = canvas.getBoundingClientRect()
   const x = Math.floor(((event.clientX - rect.left) / rect.width) * size)
@@ -23,7 +28,7 @@ function getPixelIndex(event: React.PointerEvent<HTMLCanvasElement>, size: Textu
   return y * size + x
 }
 
-export function PixelStudio() {
+export function PixelStudio({ onUpdateTexture }: PixelStudioProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [size, setSize] = useState<TextureSize>(32)
   const [tool, setTool] = useState<PixelTool>('brush')
@@ -78,7 +83,7 @@ export function PixelStudio() {
     }
   }, [pixels, size])
 
-  function paintPixel(event: React.PointerEvent<HTMLCanvasElement>) {
+  function paintPixel(event: PointerEvent<HTMLCanvasElement>) {
     const index = getPixelIndex(event, size)
     if (index === null) return
 
@@ -92,18 +97,18 @@ export function PixelStudio() {
     })
   }
 
-  function handlePointerDown(event: React.PointerEvent<HTMLCanvasElement>) {
+  function handlePointerDown(event: PointerEvent<HTMLCanvasElement>) {
     event.currentTarget.setPointerCapture(event.pointerId)
     setIsDrawing(true)
     paintPixel(event)
   }
 
-  function handlePointerMove(event: React.PointerEvent<HTMLCanvasElement>) {
+  function handlePointerMove(event: PointerEvent<HTMLCanvasElement>) {
     if (!isDrawing) return
     paintPixel(event)
   }
 
-  function handlePointerUp(event: React.PointerEvent<HTMLCanvasElement>) {
+  function handlePointerUp(event: PointerEvent<HTMLCanvasElement>) {
     event.currentTarget.releasePointerCapture(event.pointerId)
     setIsDrawing(false)
   }
@@ -115,6 +120,10 @@ export function PixelStudio() {
 
   function clearCanvas() {
     setPixels(createBlankPixels(size))
+  }
+
+  function applyTexture() {
+    onUpdateTexture?.('pixel_studio_texture', pixels.map((pixel) => pixel ?? 'transparent'), size)
   }
 
   const paintedPixels = pixels.filter(Boolean).length
@@ -175,6 +184,11 @@ export function PixelStudio() {
             <button type="button" className="secondary" onClick={() => handleManualSizeChange(size)}>
               <RotateCcw size={16} /> Reset
             </button>
+            {onUpdateTexture ? (
+              <button type="button" onClick={applyTexture}>
+                <Check size={16} /> Apply
+              </button>
+            ) : null}
           </div>
 
           <article className="pixel-studio__template-card">
