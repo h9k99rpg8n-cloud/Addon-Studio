@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Blocks, Box, Bug, Download, FileCode2, PackagePlus, Sparkles } from 'lucide-react'
+import { Blocks, Box, Bug, Download, FileCode2, PackagePlus, Palette, Sparkles } from 'lucide-react'
 import type { AddonProject } from '../core/project/projectTypes'
 import { NewProjectPanel } from '../modules/projects/NewProjectPanel'
 import type { StudioBlock } from '../modules/blocks/blockTypes'
@@ -18,6 +18,12 @@ const modules = [
     status: 'Alpha 0.1',
     description: 'Creates simple blocks with identifiers, textures, collision and generated JSON.',
     icon: Blocks,
+  },
+  {
+    name: 'Pixel Studio',
+    status: 'Alpha 0.1',
+    description: 'Creates Minecraft-style pixel textures with templates, brush, eraser and mobile canvas.',
+    icon: Palette,
   },
   {
     name: 'Item Studio',
