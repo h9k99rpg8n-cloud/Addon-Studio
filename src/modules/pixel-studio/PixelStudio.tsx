@@ -6,6 +6,7 @@ import type { PixelTemplate, PixelTool, TextureSize } from './pixelStudioTypes'
 import './pixelStudio.css'
 
 type PixelStudioProps = {
+  block?: unknown
   onUpdateTexture?: (textureName: string, pixels: string[], size: number) => void
 }
 
