@@ -1,0 +1,58 @@
+import type { PixelTemplate } from './pixelStudioTypes'
+
+export const pixelTemplates: PixelTemplate[] = [
+  {
+    id: 'classic-block',
+    name: 'Classic Block',
+    category: 'block',
+    recommendedSize: 16,
+    difficulty: 'easy',
+    description: 'A simple Minecraft-style block texture for classic packs.',
+    recommendation: 'Recommended for vanilla-style blocks, mobile projects and lightweight add-ons.',
+  },
+  {
+    id: 'detailed-block',
+    name: 'Detailed Block',
+    category: 'block',
+    recommendedSize: 32,
+    difficulty: 'easy',
+    description: 'A more detailed block texture while staying light for Bedrock.',
+    recommendation: 'Recommended for decorative blocks, signs, floors, walls and factory props.',
+  },
+  {
+    id: 'light-block',
+    name: 'Light Block',
+    category: 'block',
+    recommendedSize: 32,
+    difficulty: 'medium',
+    description: 'A template for lamps, glowing panels, machines and alarm lights.',
+    recommendation: 'Use bright pixels in small zones so the texture looks clean instead of burned.',
+  },
+  {
+    id: 'item-icon',
+    name: 'Item Icon',
+    category: 'item',
+    recommendedSize: 32,
+    difficulty: 'easy',
+    description: 'A transparent item texture for inventory icons.',
+    recommendation: 'Recommended for keys, cards, tools, coins, batteries and collectibles.',
+  },
+  {
+    id: 'entity-skin',
+    name: 'Entity Skin Base',
+    category: 'entity',
+    recommendedSize: 64,
+    difficulty: 'medium',
+    description: 'A base workspace for entity textures that will later connect with models.',
+    recommendation: 'Recommended for mobs, characters and custom creatures.',
+  },
+  {
+    id: 'particle-sprite',
+    name: 'Particle Sprite',
+    category: 'particle',
+    recommendedSize: 16,
+    difficulty: 'easy',
+    description: 'A tiny transparent texture for particles.',
+    recommendation: 'Recommended for sparks, smoke, dust, magic pixels and machine effects.',
+  },
+]
